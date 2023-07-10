@@ -1,0 +1,6 @@
+api/
+node_modules/
+.env
+package-lock.json
+response.json
+nba.html
