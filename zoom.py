@@ -13,6 +13,7 @@ load_dotenv()
 account_id = os.getenv('ACCOUNT_ID')
 client_id = os.getenv('CLIENT_ID')
 client_secret = os.getenv('CLIENT_SECRET')
+zoom_user = os.getenv('ZOOM_USER')
 HOSTS = os.getenv('HOSTS')
 
 # create a function to generate a token
@@ -45,6 +46,7 @@ meetingdetails = {"topic": "Engineering Meeting",
                                  },
                   "settings": {"host_video": "false",
                                #"alternative_hosts": HOSTS,
+                               "meeting_authentication": "false",
                                "participant_video": "false",
                                "join_before_host": "false",
                                "mute_upon_entry": "true",
@@ -58,27 +60,35 @@ meetingdetails = {"topic": "Engineering Meeting",
 # send a request with headers including
 # a token and meeting details
   
-  
+
+def listRecordings():
+    headers = {'authorization': 'Bearer ' + generateToken(),
+               'content-type': 'application/json'}
+    r = requests.get(
+        f'https://api.zoom.us/v2/users/{zoom_user}/recordings',
+        headers=headers, data=json.dumps(meetingdetails))  
+    y = json.loads(r.text)
+    print(json.dumps(y, indent=2))
+
 def createMeeting():
     headers = {'authorization': 'Bearer ' + generateToken(),
                'content-type': 'application/json'}
     r = requests.post(
-        f'https://api.zoom.us/v2/users/me/meetings',
+        f'https://api.zoom.us/v2/users/{zoom_user}/meetings',
         headers=headers, data=json.dumps(meetingdetails))
   
     print("\n creating zoom meeting ... \n")
-    # print(r.text)
-    # converting the output into json and extracting the details
     y = json.loads(r.text)
-    print(y)
-    """
-    join_URL = y["join_url"]
-    meetingPassword = y["password"]
+    print(y["start_url"])
+    print(y["join_url"])
+    # """
+    # join_URL = y["join_url"]
+    # meetingPassword = y["password"]
   
-    print(
-        f'\n here is your zoom meeting link {join_URL} and your \
-        password: "{meetingPassword}"\n')
-    """
+    # print(
+    #     f'\n here is your zoom meeting link {join_URL} and your \
+    #     password: "{meetingPassword}"\n')
+    # """
   
   
 # run the create meeting function
