@@ -12,3 +12,8 @@ HOSTS=<Zoom host email address>
 ```
 
 Install Python and "python python-dotenv" package via PIP. 
+
+Create Meeting: 
+```
+python zoom.py
+```
