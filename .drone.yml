@@ -4,6 +4,6 @@ name: default
 
 steps:
 - name: greeting
-  image: alpine
+  image: hello-world
   commands:
   - echo "Hello, world, again!"
