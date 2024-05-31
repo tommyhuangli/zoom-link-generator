@@ -5,5 +5,3 @@ name: default
 steps:
 - name: greeting
   image: hello-world
-  commands:
-  - echo "Hello, world, again!"
