@@ -11,7 +11,7 @@ ZOOM_USER=<Zoom user account>
 HOSTS=<Zoom host email address>
 ```
 
-Install Python and Run `pip python-dotenv`. 
+Install Python and Run `pip install python-dotenv`. 
 
 Create Meeting: 
 ```
