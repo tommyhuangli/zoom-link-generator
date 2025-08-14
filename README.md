@@ -1,5 +1,5 @@
 # zoom-link-generator
-User Zoom server-to-server oauth to generate a zoom link
+User Zoom server-to-server oauth to generate a zoom link.
 
 Create .env file and put the following: 
 
