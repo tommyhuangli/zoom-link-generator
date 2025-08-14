@@ -20,6 +20,7 @@ HOSTS = os.getenv('HOSTS')
 # using the pyjwt library
 
 def generateToken():
+    print(account_id)
     url = f"https://zoom.us/oauth/token?grant_type=account_credentials&account_id={account_id}"
     b64_client = f"{client_id}:{client_secret}".encode()
     b64_client = b64encode(b64_client).decode()
@@ -48,7 +49,7 @@ meetingdetails = {"topic": "Engineering Meeting",
                                #"alternative_hosts": HOSTS,
                                "meeting_authentication": "false",
                                "participant_video": "false",
-                               "join_before_host": "false",
+                               "join_before_host": "true",
                                "mute_upon_entry": "true",
                                "waiting_room": "false",
                                "watermark": "true",
@@ -59,7 +60,15 @@ meetingdetails = {"topic": "Engineering Meeting",
   
 # send a request with headers including
 # a token and meeting details
-  
+
+def getSms():
+    headers = {'authorization': 'Bearer ' + generateToken(),
+               'content-type': 'application/json'}
+    r = requests.get(
+        f'https://api.zoom.us/v2/users/{zoom_user}/sms?page_size=30',
+        headers=headers)
+    y = json.loads(r.text)
+    print(json.dumps(y, indent=2))
 
 def listRecordings():
     headers = {'authorization': 'Bearer ' + generateToken(),
@@ -78,7 +87,9 @@ def createMeeting():
         headers=headers, data=json.dumps(meetingdetails))
   
     print("\n creating zoom meeting ... \n")
+    print(r);
     y = json.loads(r.text)
+    print(y)
     print(y["start_url"])
     print(y["join_url"])
     # """
@@ -93,3 +104,5 @@ def createMeeting():
   
 # run the create meeting function
 createMeeting()
+#listRecordings()
+#getSms()
